@@ -25,7 +25,10 @@ SECRET_KEY = 's8$31^pvnh(nnovw1o9i)odx=#q+hew@p8&e&l6ij+_9_(3!w5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['yovax.pythonanywhere.com']
+
+SOCIAL_AUTH_FACEBOOK_KEY = '796444047484547'
+SOCIAL_AUTH_FACEBOOK_SECRET = '4e92cf9ebc699812f2617bd0a84a9b86'
 
 
 # Application definition
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'generales',
     'productos',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'floreria.urls'
@@ -64,6 +69,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+
             ],
         },
     },
@@ -80,9 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'floreria',
         'USER': 'javier',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PASSWORD': '123',
+        'HOST': 'yovax-1415.postgres.pythonanywhere-services.com',
+        'PORT': '11415',
     }
 }
 
@@ -130,5 +138,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
-LOGIN_REDIRECT_URL = '/productos/productos' # Cuando el usuario inicie se redirecciona a esa página
+LOGIN_REDIRECT_URL = '/productos/productos/galeria' # Cuando el usuario inicie se redirecciona a esa página
 LOGOUT_REDIRECT_URL = '/' # Cuando el usuario cierre sesión se dirige a esa página
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
